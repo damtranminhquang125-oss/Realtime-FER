@@ -2,6 +2,10 @@
 
 Hệ thống nhận diện cảm xúc khuôn mặt theo thời gian thực bằng webcam, sử dụng CNN tùy biến với cơ chế attention và TensorFlow/Keras.
 
+## Download pretrained model
+
+[https://drive.google.com/...](https://drive.google.com/file/d/108eR36U1ZmgeqjtfAs48mEmpIo12kGeh/view?usp=sharing)
+
 ## 1. Giới thiệu
 
 FER-CNN là project nghiên cứu và thử nghiệm facial emotion recognition. Ứng dụng phát hiện khuôn mặt từ webcam, cắt vùng khuôn mặt và phân loại thành bảy cảm xúc:
