@@ -1,0 +1,15 @@
+# Core deep-learning and computer-vision dependencies
+tensorflow>=2.15,<3.0
+opencv-python>=4.8
+mediapipe>=0.10
+numpy>=1.24,<3.0
+
+# Data preparation and evaluation
+pandas>=2.0
+scikit-learn>=1.3
+
+# Notebook, visualization, and training analysis
+jupyter>=1.0
+matplotlib>=3.7
+seaborn>=0.13
+plotly>=5.18
