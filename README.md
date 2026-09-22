@@ -113,6 +113,8 @@ Model trong `model_architecture.py` gồm:
 
 Residual block giúp duy trì thông tin từ tầng trước. Dilated convolution mở rộng vùng ngữ cảnh. Attention giúp model tập trung vào các đặc trưng quan trọng cho biểu cảm như mắt, lông mày và miệng.
 
+Lưu ý quan trọng: phần face detection realtime trong `realtime_emotion_test.py` không dùng Haar Cascade; code hiện tại dùng `mediapipe.solutions.face_detection.FaceDetection` để tìm khuôn mặt lớn nhất trong khung hình.
+
 ### 4.4. Huấn luyện
 
 | Thành phần | Thiết lập |
@@ -138,7 +140,7 @@ Webcam frame
     ↓
 Lật ngang
     ↓
-Grayscale → Haar Cascade
+RGB → MediaPipe Face Detection
     ↓
 Chọn khuôn mặt lớn nhất
     ↓
@@ -153,7 +155,7 @@ Trung bình xác suất trong 7 frame gần nhất
 Cảm xúc có xác suất cao nhất
 ```
 
-Detector chạy mỗi `5` frame để cải thiện FPS. Bounding box gần nhất được giữ lại giữa các lần detect. Model cảm xúc và face detector là hai bước độc lập: CNN chỉ nhận ảnh khuôn mặt đã được cắt.
+Detector chạy mỗi `5` frame để cải thiện FPS. Bounding box gần nhất được giữ lại giữa các lần detect. Model cảm xúc và face detector là hai bước độc lập: CNN chỉ nhận ảnh khuôn mặt đã được cắt. Đây là điểm khác biệt quan trọng so với các phiên bản cũ dùng Haar Cascade.
 
 ## 6. Cấu trúc thư mục
 
@@ -171,6 +173,7 @@ FER/
 - Python `3.10+`.
 - TensorFlow / Keras.
 - OpenCV.
+- MediaPipe.
 - NumPy.
 - Pandas.
 - Scikit-learn.
@@ -186,13 +189,13 @@ cd FER
 py -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
-python -m pip install tensorflow opencv-python numpy jupyter matplotlib pandas scikit-learn seaborn plotly
+python -m pip install tensorflow opencv-python mediapipe numpy jupyter matplotlib pandas scikit-learn seaborn plotly
 ```
 
 Nếu chỉ chạy webcam với model có sẵn:
 
 ```powershell
-python -m pip install tensorflow opencv-python numpy
+python -m pip install tensorflow opencv-python mediapipe numpy
 ```
 
 Kiểm tra package chính:
@@ -203,7 +206,7 @@ python -c "import cv2, numpy, tensorflow; print('OpenCV:', cv2.__version__); pri
 
 ## 9. Chạy ứng dụng realtime
 
-Đảm bảo `best_model.keras`, `model_architecture.py` và `realtime_emotion_test.py` nằm cùng thư mục:
+Đảm bảo `best_model.keras`, `model_architecture.py` và `realtime_emotion_test.py` nằm cùng thư mục. Script realtime hiện dùng MediaPipe Face Detection, do đó cần cài thêm `mediapipe` như đã nêu ở phần cài đặt:
 
 ```powershell
 python realtime_emotion_test.py
